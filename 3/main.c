@@ -7,7 +7,7 @@
 void Term();
 void Expression();
 void Add();
-void Substract();
+void Subtract();
 void Factor();
 void Ident();
 void Assignment();
@@ -18,7 +18,7 @@ void Multiply()
     Match('*');
     Factor();
     EmitLn("imull (%esp), %eax");
-    /* push of the stack */
+    /* push up the stack */
     EmitLn("addl $4, %esp");
 } 
 
@@ -27,7 +27,7 @@ void Divide()
     Match('/');
     Factor();
 
-    /* for a expersion like a/b we have eax=b and %(esp)=a
+    /* for a expression like a/b we have eax=b and %(esp)=a
      * but we need eax=a, and b on the stack 
      */
     EmitLn("movl (%esp), %edx");
@@ -37,7 +37,7 @@ void Divide()
 
     EmitLn("movl %edx, %eax");
 
-    /* sign extesnion */
+    /* sign extension */
     EmitLn("sarl $31, %edx");
     EmitLn("idivl (%esp)");
     EmitLn("addl $4, %esp");
@@ -115,7 +115,7 @@ void Expression()
                 Add();
                 break;
             case '-':
-                Substract();
+                Subtract();
                 break;
             default:
                 Expected("Addop");
@@ -134,7 +134,7 @@ void Add()
 }
 
 
-void Substract()
+void Subtract()
 {
     Match('-');
     Term();
