@@ -13,6 +13,7 @@ void Ident();
 void Assignment();
 
 
+/* Recognize and Translate a Multiply */
 void Multiply()
 {
     Match('*');
@@ -22,6 +23,7 @@ void Multiply()
     EmitLn("addl $4, %esp");
 } 
 
+/* Recognize and Translate a Divide */
 void Divide()
 {
     Match('/');
@@ -44,6 +46,7 @@ void Divide()
 
 }
 
+/* Parse and Translate an Identifier */
 void Ident()
 {
     char *name = GetName();
@@ -58,6 +61,8 @@ void Ident()
     }
 }
 
+
+/* Parse and Translate a Math Factor */
 void Factor()
 {
     if(Look == '(') {
@@ -77,6 +82,8 @@ void Factor()
     }
 }
 
+
+/* Parse and Translate a Math Term */
 void Term()
 {
     Factor();
@@ -98,6 +105,8 @@ void Term()
     }
 }
 
+
+/* Parse and Translate an Expression */
 void Expression()
 {
     if(IsAddop(Look))
@@ -124,6 +133,7 @@ void Expression()
 }
 
 
+/* Recognize and Translate an Add */
 void Add()
 {
     Match('+');
@@ -134,6 +144,7 @@ void Add()
 }
 
 
+/* Recognize and Translate a Subtract */
 void Subtract()
 {
     Match('-');
@@ -143,6 +154,8 @@ void Subtract()
     EmitLn("addl $4, %esp");
 }
 
+
+/* Parse and Translate an Assignment Statement */
 void Assignment()
 {
     char *name = GetName();
@@ -153,9 +166,9 @@ void Assignment()
     EmitLn("movl %eax, (%ebx)");
 }
 
+
 int main()
 {
-
     Init();
     EmitLn(".text");
     EmitLn(".global _start");
@@ -165,7 +178,6 @@ int main()
     if (Look != '\n') {
         Expected("NewLine");
     }
-
 
     /* return the result */
     EmitLn("movl %eax, %ebx");

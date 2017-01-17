@@ -3,17 +3,21 @@
 #include <stdlib.h>
 
 
+/* Read New Character From Input Stream */
 void GetChar() 
 {
     Look = getchar();
 }
 
 
+/* Report an Error */
 void Error(char *s)
 {
     printf("\nError: %s.", s);
 }
 
+
+/* Report Error and Halt */
 void Abort(char *s)
 {
     Error(s);
@@ -21,6 +25,7 @@ void Abort(char *s)
 }
 
 
+/* Report What Was Expected */
 void Expected(char *s)
 {
     sprintf(tmp, "%s Expected", s);
@@ -28,6 +33,7 @@ void Expected(char *s)
 }
 
 
+/* Match a Specific Input Character */
 void Match(char x)
 {
     if(Look == x) {
@@ -39,21 +45,28 @@ void Match(char x)
 }
 
 
+/* Recognize an Alpha Character */
 int IsAlpha(char c)
 {
     return (UPCASE(c) >= 'A') && (UPCASE(c) <= 'Z');
 } 
 
+
+/* Recognize a Decimal Digit */
 int IsDigit(char c)
 {
     return (c >= '0') && (c <= '9');
 }
 
+
+/* Recognize an Addop */
 int IsAddop(char c)
 {
     return (c == '+') || (c == '-');
 }
 
+
+/* Get an Identifier */
 char GetName()
 {
     char c = Look;
@@ -69,6 +82,7 @@ char GetName()
 }
 
 
+/* Get a Number */
 char GetNum()
 {
     char c = Look;
@@ -83,17 +97,22 @@ char GetNum()
     return c;
 }
 
+/* Output a String with Tab */
 void Emit(char *s)
 {
     printf("\t%s", s);
 }
 
+
+/* Output a String with Tab and Newline */
 void EmitLn(char *s)
 {
     Emit(s);
     printf("\n");
 }
 
+
+/* Initialize */
 void Init()
 {
     GetChar();

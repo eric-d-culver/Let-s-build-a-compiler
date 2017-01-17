@@ -5,7 +5,7 @@
 char tmp[MAX_BUF];
 char token_buf[MAX_BUF];
 
-char Look;
+char Look; /* Lookahead Character */
 
 void GetChar();
 

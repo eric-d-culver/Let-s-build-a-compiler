@@ -5,7 +5,7 @@
 #define MAX_BUF 100
 char tmp[MAX_BUF];
 
-char Look;
+char Look; /* Lookahead Character */
 
 void GetChar();
 

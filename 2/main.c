@@ -11,6 +11,7 @@ void Subtract();
 void Factor();
 
 
+/* Recognize and Translate a Multiply */
 void Multiply()
 {
     Match('*');
@@ -20,12 +21,14 @@ void Multiply()
     EmitLn("addl $4, %esp");
 } 
 
+
+/* Recognize and Translate a Divide */
 void Divide()
 {
     Match('/');
     Factor();
 
-    /* for a expersion like a/b we have eax=b and %(esp)=a
+    /* for a expression like a/b we have eax=b and %(esp)=a
      * but we need eax=a, and b on the stack 
      */
     EmitLn("movl (%esp), %edx");
@@ -42,6 +45,8 @@ void Divide()
 
 }
 
+
+/* Parse and Translate a Math Factor */
 void Factor()
 {
 
@@ -64,6 +69,8 @@ void Factor()
     }
 }
 
+
+/* Parse and Translate a Math Term */
 void Term()
 {
     Factor();
@@ -85,6 +92,8 @@ void Term()
     }
 }
 
+
+/* Parse and Translate an Expression */
 void Expression()
 {
     if(IsAddop(Look))
@@ -111,6 +120,7 @@ void Expression()
 }
 
 
+/* Recognize and Translate an Add */
 void Add()
 {
     Match('+');
@@ -121,6 +131,7 @@ void Add()
 }
 
 
+/* Recognize and Translate a Subtract */
 void Subtract()
 {
     Match('-');
@@ -133,7 +144,6 @@ void Subtract()
 
 int main()
 {
-
     Init();
     EmitLn(".text");
     EmitLn(".global _start");

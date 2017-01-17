@@ -6,7 +6,7 @@
 
 static char tmp[MAX_BUF];
 
-char Look;
+char Look; /* Lookahead Character */
 
 void GetChar();
 
