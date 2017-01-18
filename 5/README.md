@@ -17,7 +17,7 @@ no way to decide when to terminate a `<block>`. When dealing with "IF" without
 IF <condition> <block> ENDIF
 ```
 
-Because the author imply that `<block>` should not be ended with token "END",
+Because the author implies that `<block>` should not be ended with token "END",
 now we can treat token "ENDIF" which is represent by character 'e' as the
 termination of block. That means source code like "aibced" is allowed, aka
 "bc" this two statements are treated as one block.
@@ -30,7 +30,7 @@ IF <condition> <block> [ ELSE <block>] ENDIF
 
 While we are dealing with the first `<block>`, there is no way to quit
 recognizing `<block>` and match token "ELSE". Especially when the author
-propose test case "aiblcede". It was expected to recognize "b" as a single
+proposes the test case "aiblcede". It is expected to recognize "b" as a single
 block and "l" as token "ELSE". Which however is not possible because there is
 no way to determine the exit of `<block>`.
 
