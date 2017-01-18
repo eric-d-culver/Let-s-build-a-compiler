@@ -112,7 +112,6 @@ void Output()
 
 int main()
 {
-
     Init();
     do
     {

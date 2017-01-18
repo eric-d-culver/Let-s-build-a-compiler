@@ -5,7 +5,7 @@
 /* Helper Function */
 char uppercase(char c)
 {
-    return (c & 0xDD);
+    return (c & 0xDF);
 }
 
 
@@ -13,7 +13,6 @@ char uppercase(char c)
 void GetChar() 
 {
     Look = getchar();
-    /* printf("Getchar: %c\n", Look); */
 }
 
 
@@ -92,7 +91,7 @@ char GetName()
 {
     char c = Look;
 
-    if( !IsAlpha(Look)) {
+    if(!IsAlpha(Look)) {
         sprintf(tmp, "Name");
         Expected(tmp);
     }
