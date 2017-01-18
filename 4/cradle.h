@@ -5,8 +5,8 @@
 #define TABLE_SIZE 26
 char tmp[MAX_BUF];
 
-char Look;
-int Table[TABLE_SIZE];
+char Look; /* Lookahead Character */
+int Table[TABLE_SIZE]; 
 
 void GetChar();
 

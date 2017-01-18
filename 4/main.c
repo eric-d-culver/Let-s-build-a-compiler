@@ -6,60 +6,11 @@
 
 int Term();
 int Expression();
-void Add();
-void Subtract();
 int Factor();
-void Ident();
 void Assignment();
 
 
-/* Not used in Chapter 4 */
-void Multiply()
-{
-    Match('*');
-    Factor();
-    EmitLn("imull (%esp), %eax");
-    /* push up the stack */
-    EmitLn("addl $4, %esp");
-} 
-
-/* Not used in Chapter 4 */
-void Divide()
-{
-    Match('/');
-    Factor();
-
-    /* for a expression like a/b we have eax=b and %(esp)=a
-     * but we need eax=a, and b on the stack 
-     */
-    EmitLn("movl (%esp), %edx");
-    EmitLn("addl $4, %esp");
-
-    EmitLn("pushl %eax");
-
-    EmitLn("movl %edx, %eax");
-
-    /* sign extension */
-    EmitLn("sarl $31, %edx");
-    EmitLn("idivl (%esp)");
-    EmitLn("addl $4, %esp");
-
-}
-
-void Ident()
-{
-    char name = GetName();
-    if (Look == '(') {
-        Match('(');
-        Match(')');
-        sprintf(tmp, "call %c", name);
-        EmitLn(tmp);
-    } else {
-        sprintf(tmp, "movl %c, %%eax", name);
-        EmitLn(tmp);
-    }
-}
-
+/* Parse and Translate a Math Factor */
 int Factor()
 {
     int factor;
@@ -76,6 +27,8 @@ int Factor()
     return factor;
 }
 
+
+/* Parse and Translate a Math Term */
 int Term()
 {
     int value = Factor();
@@ -98,6 +51,8 @@ int Term()
     return value;
 }
 
+
+/* Parse and Translate an Expression */
 int Expression()
 {
     int value;
@@ -126,33 +81,14 @@ int Expression()
 }
 
 
-/* Not used in Chapter 4 */
-void Add()
-{
-    Match('+');
-    Term();
-    EmitLn("addl (%esp), %eax");
-    EmitLn("addl $4, %esp");
-    
-}
-
-
-/* Not used in Chapter 4 */
-void Subtract()
-{
-    Match('-');
-    Term();
-    EmitLn("subl (%esp), %eax");
-    EmitLn("negl %eax");
-    EmitLn("addl $4, %esp");
-}
-
+/* Parse and Translate an Assignment Statement */
 void Assignment()
 {
     char name = GetName();
     Match('=');
     Table[name - 'A'] = Expression();
 }
+
 
 /* Input Routine
  * We do a little different to the original article.  The syntax of
@@ -164,6 +100,7 @@ void Input()
     Table[name - 'A'] = Expression();
 }
 
+
 /* Output Routine */
 void Output()
 {
@@ -171,6 +108,7 @@ void Output()
     sprintf(tmp, "%d", Table[GetName() - 'A']);
     EmitLn(tmp);
 }
+
 
 int main()
 {
