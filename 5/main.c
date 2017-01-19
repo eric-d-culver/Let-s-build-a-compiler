@@ -23,12 +23,16 @@ void Expression();
 void DoDo();
 void DoBreak(char *L);
 
+
+/* Recognize and Translate an "Other" */
 void Other()
 {
     sprintf(tmp, "%c", GetName());
     EmitLn(tmp);
 }
 
+
+/* Recognize and Translate a Statement Block */
 void Block(char *L)
 {
     while (! strchr("elu", Look)) {
@@ -58,17 +62,21 @@ void Block(char *L)
                 Other();
                 break;
         }
-        /* this is for convinent, otherwise newline character will
+        /* this is for convenience, otherwise newline character will
         cause an error */
         Newline();
     }
 }
 
+
+/* Parse and Translate a Boolean Condition */
 void Condition()
 {
-    EmitLn("<codition>");
+    EmitLn("<condition>");
 }
 
+
+/* Parse and Translate a Program */
 void DoProgram()
 {
     Block(NULL);
@@ -78,6 +86,8 @@ void DoProgram()
     EmitLn("END");
 }
 
+
+/* Recognize and Translate and IF Construct */
 void DoIf(char *L)
 {
     char L1[MAX_BUF];
@@ -111,6 +121,8 @@ void DoIf(char *L)
     PostLabel(L2);
 }
 
+
+/* Parse and Translate a WHILE Statement */
 void DoWhile()
 {
     char L1[MAX_BUF];
@@ -130,6 +142,8 @@ void DoWhile()
     PostLabel(L2);
 }
 
+
+/* Parse and Translate a LOOP Statement */
 void DoLoop()
 {
     char L1[MAX_BUF];
@@ -145,6 +159,8 @@ void DoLoop()
     PostLabel(L2);
 }
 
+
+/* Parse and Translate a REPEAT Statement */
 void DoRepeat()
 {
     char L1[MAX_BUF];
@@ -162,8 +178,10 @@ void DoRepeat()
     PostLabel(L2);
 }
 
+
 /* I haven't test the actual generated x86 code here, so you're free to
  * inform me if there are bugs. :) */
+/* Parse and Translate a FOR Statement */
 void DoFor()
 {
     char L1[MAX_BUF];
@@ -198,11 +216,15 @@ void DoFor()
     EmitLn("pop %eax");
 }
 
+
+/* Parse and Translate a Math Expression */
 void Expression()
 {
     EmitLn("<expression>");
 }
 
+
+/* Parse and Translate a DO Statement */
 void DoDo()
 {
     Match('d');
@@ -224,6 +246,8 @@ void DoDo()
     EmitLn("popl %ecx");
 }
 
+
+/* Recognize and Translate a BREAK */
 void DoBreak(char *L)
 {
     Match('b');
@@ -234,6 +258,7 @@ void DoBreak(char *L)
         Abort("No loop to break from");
     }
 }
+
 
 int main()
 {
