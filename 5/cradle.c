@@ -3,29 +3,33 @@
 #include <stdlib.h>
 
 #define TABLE_SIZE 26
-static int LCount = 0;
+static int LCount = 0; /* Label Counter */
 static char labelName[MAX_BUF];
 
 static int Table[TABLE_SIZE];
 
-/* Helper Functions */
+/* Helper Function */
 char uppercase(char c)
 {
     return (c & 0xDF);
 }
 
+
+/* Read New Character From Input Stream */
 void GetChar() 
 {
     Look = getchar();
-    /* printf("Getchar: %c\n", Look); */
 }
 
 
+/* Report an Error */
 void Error(char *s)
 {
     printf("\nError: %s.", s);
 }
 
+
+/* Report an Error and Halt */
 void Abort(char *s)
 {
     Error(s);
@@ -33,6 +37,7 @@ void Abort(char *s)
 }
 
 
+/* Report What Was Expected */
 void Expected(char *s)
 {
     sprintf(tmp, "%s Expected", s);
@@ -40,6 +45,7 @@ void Expected(char *s)
 }
 
 
+/* Match a Specific Input Character */
 void Match(char x)
 {
     if(Look == x) {
@@ -50,6 +56,8 @@ void Match(char x)
     }
 }
 
+
+/* Recognize and Skip Over a Newline */
 void Newline()
 {
     if (Look == '\r') {
@@ -62,21 +70,29 @@ void Newline()
     }
 }
 
+
+/* Recognize an Alpha Character */
 int IsAlpha(char c)
 {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 } 
 
+
+/* Recognize a Decimal Digit */
 int IsDigit(char c)
 {
     return (c >= '0') && (c <= '9');
 }
 
+
+/* Recognize an Addop */
 int IsAddop(char c)
 {
     return (c == '+') || (c == '-');
 }
 
+
+/* Get an Identifier */
 char GetName()
 {
     char c = Look;
@@ -92,6 +108,7 @@ char GetName()
 }
 
 
+/* Get a Number */
 int GetNum()
 {
     int value = 0;
@@ -108,17 +125,23 @@ int GetNum()
     return value;
 }
 
+
+/* Output a String with Tab */
 void Emit(char *s)
 {
     printf("\t%s", s);
 }
 
+
+/* Output a String with Tab and Newline */
 void EmitLn(char *s)
 {
     Emit(s);
     printf("\n");
 }
 
+
+/* Initialize */
 void Init()
 {
     LCount = 0;
@@ -127,6 +150,8 @@ void Init()
     GetChar();
 }
 
+
+/* Initialize the Variable Area */
 void InitTable()
 {
     int i;
@@ -136,13 +161,17 @@ void InitTable()
 
 }
 
+
+/* Generate a Unique Label */
 char *NewLabel()
 {
     sprintf(labelName, "L%02d", LCount);
-    LCount ++;
+    LCount++;
     return labelName;
 }
 
+
+/* Post a Label to Output */
 void PostLabel(char *label)
 {
     printf("%s:\n", label);
